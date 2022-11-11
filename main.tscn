@@ -1,20 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://nv3udnh68stb"]
 
-[sub_resource type="GDScript" id="GDScript_liimo"]
-script/source = "extends Control
-
-
-
-func _on_verlet_rope_demo_button_pressed() -> void:
-	get_tree().change_scene_to_packed(load(\"res://verlet_rope/verlet_rope_demo.tscn\"))
-"
+[ext_resource type="Script" path="res://main.gd" id="1_dx103"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = SubResource("GDScript_liimo")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dx103")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
