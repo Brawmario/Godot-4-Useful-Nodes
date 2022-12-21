@@ -40,7 +40,7 @@ func _reset() -> void:
 	_current_points.resize(get_point_count())
 	for i in range(_current_points.size()):
 		_current_points.set(i, to_global(points[i]))
-	
+
 	_old_points.clear()
 	_old_points.append_array(_current_points)
 
