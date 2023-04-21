@@ -2,14 +2,14 @@ class_name VerletRope
 extends Line2D
 
 
-@export var lenght := 500.0:
+@export var length := 500.0:
 	set(value):
-		lenght = value
-		_update_segment_lenght()
+		length = value
+		_update_segment_length()
 @export var number_of_segments := 50:
 	set(value):
 		number_of_segments = value
-		_update_segment_lenght()
+		_update_segment_length()
 		_reset()
 @export var constraint_iterations := 10
 @export var gravity := Vector2(0.0, 10.0)
@@ -17,11 +17,11 @@ extends Line2D
 var _current_points := PackedVector2Array()
 var _old_points := PackedVector2Array()
 
-var _segment_lenght: float
+var _segment_length: float
 
 
 func _ready() -> void:
-	_update_segment_lenght()
+	_update_segment_length()
 	_reset()
 
 
@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 func _reset() -> void:
 	clear_points()
 	for i in range(number_of_segments + 1):
-		add_point(Vector2(0, _segment_lenght * i))
+		add_point(Vector2(0, _segment_length * i))
 
 	_current_points.resize(get_point_count())
 	for i in range(_current_points.size()):
@@ -96,17 +96,11 @@ func _constrain_middle() -> void:
 
 
 func _calculate_change_vector(first_point: Vector2, second_point: Vector2) -> Vector2:
-	var distance := (first_point - second_point).length()
-	var error := absf(distance - _segment_lenght)
+	var segment := first_point - second_point
+	var error := segment.length() - _segment_length
 
-	var change_direction: Vector2
-	if distance > _segment_lenght:
-		change_direction = (first_point - second_point).normalized()
-	else:
-		change_direction = (second_point - first_point).normalized()
-
-	return change_direction * error
+	return segment.normalized() * error
 
 
-func _update_segment_lenght() -> void:
-	_segment_lenght = lenght / float(number_of_segments)
+func _update_segment_length() -> void:
+	_segment_length = length / float(number_of_segments)
